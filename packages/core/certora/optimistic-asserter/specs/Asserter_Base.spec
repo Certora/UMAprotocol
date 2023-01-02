@@ -34,6 +34,7 @@ methods {
     getAssertionDisputer(bytes32) returns (address) envfree
     getId(bytes,address,address,uint64,address,uint256,bytes32) returns (bytes32)
     tokenBalanceOf(address, address) returns (uint256) envfree
+    mayEnter() envfree
 
     // Finder methods
     finder.getImplementationAddress(bytes32) returns (address) envfree

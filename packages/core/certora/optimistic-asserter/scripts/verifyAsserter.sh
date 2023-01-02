@@ -8,19 +8,19 @@ certoraRun ./certora/optimistic-asserter/harness/OptimisticAsserter.sol:Optimist
            ./contracts/common/test/BasicERC20.sol \
 \
 \
---verify OptimisticAsserterHarness:certora/optimistic-asserter/specs/Asserter_Bonds.spec \
+--verify OptimisticAsserterHarness:certora/optimistic-asserter/specs/Asserter_Auxiliary.spec \
 \
 \
 --link OptimisticAsserterHarness:finder=Finder \
 \
 \
 --packages @openzeppelin=../../node_modules/@openzeppelin \
---path . \
+--path ./ \
 --solc solc8.16 \
 --send_only \
---staging \
---settings -mediumTimeout=200,-byteMapHashingPrecision=10 \
---loop_iter 2 \
+--settings -byteMapHashingPrecision=11,-mediumTimeout=200,-smt_hashingScheme=PlainInjectivity \
+--loop_iter 3 \
+--cloud \
 --optimistic_loop \
---msg "UMA Asserter Bonds " 
+--msg "UMA Asserter Auxiliary" \
 # ./contracts/data-verification-mechanism/implementation/Store.sol \

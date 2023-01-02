@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 pragma solidity 0.8.16;
 
-import "../../../contracts/optimistic-asserter/implementation/OptimisticAsserter.sol";
+//import "../../../contracts/optimistic-asserter/implementation/OptimisticAsserter.sol";
+import "../munged/OptimisticAsserter.sol";
 
 /**
  * @title Optimistic Asserter.
@@ -26,6 +27,10 @@ contract OptimisticAsserterHarness is OptimisticAsserter {
     function getOracleFeeByAssertion(bytes32 assertionID) external view returns (uint256) {
         return (assertions[assertionID].bond * burnedBondPercentage) / 1e18;
     }
+
+    // Calling this function before any other function in CVL will force the current state
+    // as _notEntered.
+    function mayEnter() public view nonReentrantView {}
 
     function getId(
         bytes memory claim,

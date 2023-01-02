@@ -58,15 +58,9 @@ invariant validBondPercentage()
     burnedBondPercentage() <= 10^18 && burnedBondPercentage() > 0
     filtered{f -> !isMultiCall(f)}
 
-// Simple integrity rule
-rule assertionDisputerIntegrity(address disputer, bytes32 assertionID) {
-    env e;
-    disputeAssertion(e, assertionID, disputer);
-    assert disputer == getAssertionDisputer(assertionID);
-}
-
 // When we call settleAssertion, we expect that either the asserter
 // or the disputer get the correct amount of bonds.
+// Verified
 rule onlyDisputerOrAsserterGetBond(bytes32 assertionID) {
     env e;
     address asserter = getAssertionAsserter(assertionID);
@@ -75,7 +69,7 @@ rule onlyDisputerOrAsserterGetBond(bytes32 assertionID) {
     uint256 bond =  getAssertionBond(assertionID);
     address other;
 
-    require currency == testERC20;  // A specific instance of the currency
+    //require currency == testERC20;  // A specific instance of the currency
 
     // 'Other' is none of the addresses involved in the bonds transfer.
     require asserter != other; 

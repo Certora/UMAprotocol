@@ -18,7 +18,7 @@ certoraRun ./certora/optimistic-asserter/harness/OptimisticAsserter.sol:Optimist
 --path ./ \
 --solc solc8.16 \
 --send_only \
---settings -byteMapHashingPrecision=11,-mediumTimeout=200,-smt_hashingScheme=PlainInjectivity \
+--settings -byteMapHashingPrecision=11,-mediumTimeout=200 \
 --loop_iter 3 \
 --cloud \
 --optimistic_loop \

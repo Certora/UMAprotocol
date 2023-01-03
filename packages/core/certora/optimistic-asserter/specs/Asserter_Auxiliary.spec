@@ -2,6 +2,7 @@
 import "./Asserter_Base.spec"
 import "./dispatchedMethods.spec"
 
+using TestnetERC20 as testERC20
 /*************************************************
 *                Custom rules                    *
 **************************************************/
@@ -81,10 +82,10 @@ rule assertTruthFrontRunning() {
     address callbackRecipient1; address callbackRecipient2;
     address escalationManager1; address escalationManager2;
     uint64 liveness1; uint64 liveness2;
-    address currency1 = testERC20; address currency2 = testERC20;
+    address currency1; address currency2;
     uint256 bond1; uint256 bond2;
     bytes32 identifier1; bytes32 identifier2;
-    bytes32 domainId1; bytes32 domainId2;
+    bytes32 domainId1; bytes32 domainId2; 
 
     // Calling assertTruth by e1.msg.sender successfully.
     bytes32 assertionId1 = assertTruth(e1,claim1,asserter1,callbackRecipient1,escalationManager1,
@@ -97,6 +98,11 @@ rule assertTruthFrontRunning() {
 
     // Simply checking that the assertion ids should be different
     assert assertionId2 != assertionId1;
+
+    // Prevent 'transfer' overflow
+    if(currency1 == currency2) {
+        require tokenBalanceOf(currency1, currentContract) + bond1 <= max_uint; 
+    }
 
     // Now making sure that the original user can call the same function without reverting.
     assertTruth@withrevert(e1,claim1,asserter1,callbackRecipient1,escalationManager1,

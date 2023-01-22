@@ -8,7 +8,7 @@ certoraRun ./certora/optimistic-asserter/harness/OptimisticAsserter.sol:Optimist
            ./contracts/common/test/BasicERC20.sol \
 \
 \
---verify OptimisticAsserterHarness:certora/optimistic-asserter/specs/Asserter_Auxiliary.spec \
+--verify OptimisticAsserterHarness:certora/optimistic-asserter/specs/Asserter_Bonds.spec \
 \
 \
 --link OptimisticAsserterHarness:finder=Finder \
@@ -20,7 +20,7 @@ certoraRun ./certora/optimistic-asserter/harness/OptimisticAsserter.sol:Optimist
 --send_only \
 --settings -byteMapHashingPrecision=11,-mediumTimeout=200 \
 --loop_iter 3 \
---cloud \
+--staging master \
 --optimistic_loop \
---msg "UMA Asserter Auxiliary" \
+--msg "UMA Asserter Bonds" \
 # ./contracts/data-verification-mechanism/implementation/Store.sol \

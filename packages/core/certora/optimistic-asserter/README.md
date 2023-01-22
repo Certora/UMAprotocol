@@ -39,7 +39,12 @@ To run a verification job:
 
 1. Open terminal and `cd` your way to the UMA/packages/core directory.
 
-2. Run the script you'd like to get results for:
+2. For first time verification, after pulling from git, go to ./certora/optimistic-asserter/
+and then run 'make munge'. This will apply the changes recorded in applyHarness.patch to the munged folder, where the contracts are stored.
+
+3. Go back to core directory ../../ 
+
+4. Run the script you'd like to get results for:
    ```
    sh certora/scripts/verifyAsserter.sh
    ```

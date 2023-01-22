@@ -1,28 +1,27 @@
---- ../../contracts/optimistic-asserter/implementation/OptimisticAsserter.sol	2023-01-02 10:42:01.083010100 +0200
-+++ 	2023-01-02 13:40:43.848483900 +0200
-@@ -3,21 +3,20 @@
- 
+--- ../../contracts/optimistic-asserter/implementation/OptimisticAsserter.sol	2023-01-22 12:29:39.864755600 +0200
++++ 	2023-01-22 12:42:33.493700900 +0200
+@@ -4,20 +4,20 @@
  import "@openzeppelin/contracts/access/Ownable.sol";
  import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
-+import "../../../contracts/optimistic-asserter/interfaces/OptimisticAsserterCallbackRecipientInterface.sol";
-+import "../../../contracts/optimistic-asserter/interfaces/OptimisticAsserterInterface.sol";
-+import "../../../contracts/optimistic-asserter/interfaces/EscalationManagerInterface.sol";
  
 -import "../interfaces/OptimisticAsserterCallbackRecipientInterface.sol";
 -import "../interfaces/OptimisticAsserterInterface.sol";
 -import "../interfaces/EscalationManagerInterface.sol";
-+import "../../../contracts/data-verification-mechanism/implementation/Constants.sol";
-+import "../../../contracts/data-verification-mechanism/interfaces/FinderInterface.sol";
-+import "../../../contracts/data-verification-mechanism/interfaces/IdentifierWhitelistInterface.sol";
-+import "../../../contracts/data-verification-mechanism/interfaces/OracleAncillaryInterface.sol";
-+import "../../../contracts/data-verification-mechanism/interfaces/StoreInterface.sol";
++import "../../../contracts/optimistic-asserter/interfaces/OptimisticAsserterCallbackRecipientInterface.sol";
++import "../../../contracts/optimistic-asserter/interfaces/OptimisticAsserterInterface.sol";
++import "../../../contracts/optimistic-asserter/interfaces/EscalationManagerInterface.sol";
  
 -import "../../data-verification-mechanism/implementation/Constants.sol";
 -import "../../data-verification-mechanism/interfaces/FinderInterface.sol";
 -import "../../data-verification-mechanism/interfaces/IdentifierWhitelistInterface.sol";
 -import "../../data-verification-mechanism/interfaces/OracleAncillaryInterface.sol";
 -import "../../data-verification-mechanism/interfaces/StoreInterface.sol";
--
++import "../../../contracts/data-verification-mechanism/implementation/Constants.sol";
++import "../../../contracts/data-verification-mechanism/interfaces/FinderInterface.sol";
++import "../../../contracts/data-verification-mechanism/interfaces/IdentifierWhitelistInterface.sol";
++import "../../../contracts/data-verification-mechanism/interfaces/OracleAncillaryInterface.sol";
++import "../../../contracts/data-verification-mechanism/interfaces/StoreInterface.sol";
+ 
 -import "../../common/implementation/AddressWhitelist.sol";
 -import "../../common/implementation/AncillaryData.sol";
 -import "../../common/implementation/Lockable.sol";
@@ -35,31 +34,19 @@
  /**
   * @title Optimistic Asserter.
 --- ../../contracts/common/implementation/MultiCaller.sol	2023-01-02 11:33:57.828023600 +0200
-+++ 	1970-01-01 02:00:00.000000000 +0200
-@@ -1,26 +0,0 @@
--// This contract is taken from Uniswap's multi call implementation (https://github.com/Uniswap/uniswap-v3-periphery/blob/main/contracts/base/Multicall.sol)
--// and was modified to be solidity 0.8 compatible. Additionally, the method was restricted to only work with msg.value
--// set to 0 to avoid any nasty attack vectors on function calls that use value sent with deposits.
--pragma solidity ^0.8.0;
--
--/// @title MultiCaller
--/// @notice Enables calling multiple methods in a single call to the contract
--contract MultiCaller {
--    function multicall(bytes[] calldata data) external returns (bytes[] memory results) {
--        results = new bytes[](data.length);
--        for (uint256 i = 0; i < data.length; i++) {
--            (bool success, bytes memory result) = address(this).delegatecall(data[i]);
--
--            if (!success) {
--                // Next 5 lines from https://ethereum.stackexchange.com/a/83577
--                if (result.length < 68) revert();
--                assembly {
--                    result := add(result, 0x04)
--                }
--                revert(abi.decode(result, (string)));
--            }
--
--            results[i] = result;
--        }
--    }
--}
++++ 	2023-01-22 11:59:32.428668900 +0200
+@@ -8,6 +8,7 @@
+ contract MultiCaller {
+     function multicall(bytes[] calldata data) external returns (bytes[] memory results) {
+         results = new bytes[](data.length);
++        /*
+         for (uint256 i = 0; i < data.length; i++) {
+             (bool success, bytes memory result) = address(this).delegatecall(data[i]);
+ 
+@@ -22,5 +23,6 @@
+ 
+             results[i] = result;
+         }
++        */
+     }
+ }

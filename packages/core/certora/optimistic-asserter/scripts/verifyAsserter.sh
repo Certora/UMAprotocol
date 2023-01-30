@@ -1,3 +1,12 @@
+if [[ "$1" ]]
+then
+    RULE="--rule $1"
+fi
+
+if [[ "$2" ]]
+then
+    MSG="- $2"
+fi
 certoraRun ./certora/optimistic-asserter/harness/OptimisticAsserter.sol:OptimisticAsserterHarness \
             ./certora/optimistic-asserter/harness/MockEscalationManager.sol \
             ./certora/optimistic-asserter/harness/MockStore.sol:Store \
@@ -22,5 +31,8 @@ certoraRun ./certora/optimistic-asserter/harness/OptimisticAsserter.sol:Optimist
 --loop_iter 3 \
 --staging master \
 --optimistic_loop \
---msg "UMA Asserter Bonds" \
+$RULE \
+    --msg "UMA Asserter Bonds spec: $RULE $MSG"
+
 # ./contracts/data-verification-mechanism/implementation/Store.sol \
+# --typecheck_only \
